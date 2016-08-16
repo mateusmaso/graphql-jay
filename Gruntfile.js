@@ -40,11 +40,28 @@ module.exports = function(grunt) {
         dest: 'dist/<%= pkg.name %>.min.js'
       }
     },
+    mochaTest: {
+      test: {
+        options: {
+          reporter: 'spec',
+          mocha: require('mocha')
+        },
+        src: ['spec/index.js']
+      }
+    },
+    mocha_phantomjs: {
+      options: {
+        reporter: 'spec'
+      },
+      all: ['spec/index.html']
+    },
     clean: ['dist']
   });
 
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-mocha-test');
+  grunt.loadNpmTasks('grunt-mocha-phantomjs');
 
-  grunt.registerTask('default', ['browserify', 'uglify']);
+  grunt.registerTask('default', ['browserify', 'uglify', 'mochaTest', 'mocha_phantomjs']);
 };
