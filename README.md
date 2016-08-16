@@ -1,4 +1,4 @@
-# azure-jay
+# azure-jay [![Build Status](https://travis-ci.org/mateusmaso/azure-jay.svg?branch=master)](https://travis-ci.org/mateusmaso/azure-jay)
 
 Azure Jay is a data-fetching framework for consuming RESTful resources over GraphQL.
 
