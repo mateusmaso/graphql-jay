@@ -1,3 +1,0 @@
-describe("azure-jay", function() {
-
-});

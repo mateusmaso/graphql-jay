@@ -1,24 +1,36 @@
 {
-  "name": "azure-jay",
-  "description": "Data-fetching framework for consuming RESTful resources over GraphQL",
+  "name": "graphql-jay",
+  "description": "GraphQL schema generator for composing resources over data services",
   "version": "0.1.0",
   "license": "MIT",
   "devDependencies": {
-    "chai": "*",
-    "mocha": "*",
-    "grunt": "~0.4.5",
-    "grunt-browserify": "~4.0.1",
-    "grunt-contrib-uglify": "~0.5.0",
-    "grunt-mocha-test": "~0.11.0",
-    "grunt-mocha-phantomjs": "~3.0.0",
-    "browserify": "^13.0.0"
+    "chai": "^3.5.0",
+    "mocha": "^3.0.2",
+    "babel-cli": "^6.14.0",
+    "babel-register": "^6.14.0",
+    "babel-preset-es2015": "^6.14.0",
+    "graphql": "^0.7.0",
+    "express": "^4.13.4",
+    "express-graphql": "^0.5.4",
+    "morgan": "^1.7.0",
+    "body-parser": "^1.15.1",
+    "cors": "^2.7.1",
+    "faker": "^3.1.0",
+    "node-fetch": "^1.6.1",
+    "clone": "^1.0.2",
+    "deep-assign": "^2.0.0",
+    "traverse": "^0.6.6",
+    "keypath": "^0.0.1"
   },
   "repository": {
     "type" : "git",
-    "url": "http://github.com/mateusmaso/azure-jay"
+    "url": "http://github.com/mateusmaso/graphql-jay"
   },
   "scripts": {
-    "test": "grunt mochaTest mocha_phantomjs"
+    "start": "node test/server/index.js",
+    "build": "babel src --out-dir lib",
+    "pretest": "npm run build",
+    "test": "mocha --require babel-register"
   },
   "engines": {
     "node" : "~5.9.0"
