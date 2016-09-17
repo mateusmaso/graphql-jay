@@ -1,8 +1,16 @@
 {
   "name": "graphql-jay",
-  "description": "GraphQL schema generator for composing resources over data services",
+  "description": "GraphQL schema generator for composing objects over JSON-based services",
   "version": "0.1.0",
   "license": "MIT",
+  "keywords": [
+    "graphql",
+    "rest",
+    "restful",
+    "json-rpc",
+    "json-schema",
+    "json-hyper-schema"
+  ],
   "devDependencies": {
     "chai": "^3.5.0",
     "mocha": "^3.0.2",
@@ -16,11 +24,12 @@
     "body-parser": "^1.15.1",
     "cors": "^2.7.1",
     "faker": "^3.1.0",
-    "node-fetch": "^1.6.1",
+    "isomorphic-fetch": "^2.2.1",
     "clone": "^1.0.2",
     "deep-assign": "^2.0.0",
     "traverse": "^0.6.6",
-    "keypath": "^0.0.1"
+    "keypath": "^0.0.1",
+    "browserify": "^13.1.0"
   },
   "repository": {
     "type" : "git",
@@ -29,8 +38,11 @@
   "scripts": {
     "start": "node test/server/index.js",
     "build": "babel src --out-dir lib",
+    "build:test": "babel test --out-dir lib/test",
     "pretest": "npm run build",
-    "test": "mocha --require babel-register"
+    "test": "mocha --require babel-register",
+    "test:build": "browserify test/index.js -o test/client/index.js",
+    "build:browser": "browserify test/index.js -o test/client/index.js"
   },
   "engines": {
     "node" : "~5.9.0"

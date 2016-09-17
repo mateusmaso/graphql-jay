@@ -1,4 +1,4 @@
-import fetch from "node-fetch";
+import fetch from "isomorphic-fetch";
 import deepAssign from "deep-assign";
 
 export function fetchData(...requests) {

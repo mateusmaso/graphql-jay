@@ -1,4 +1,4 @@
-import fetch from "node-fetch";
+import fetch from "isomorphic-fetch";
 import {introspectionQuery} from "graphql";
 
 var url = "http://localhost:8080/api/graph";
