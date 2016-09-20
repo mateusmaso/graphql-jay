@@ -4,7 +4,7 @@ This is a GraphQL schema generator for composing data over JSON-based services. 
 
 <img src="http://www.hbw.com/sites/default/files/styles/large_a/public/figures/hbw14/jpg/14_31_026_Cyanocorax%20caeruleus_cerulean.jpg" width=100 />
 
-# Motivations
+## Motivations
 
 - Direct API calls are coupling clients to data services.
 - Developers are being discouraged from performing API changes.
