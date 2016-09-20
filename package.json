@@ -1,12 +1,12 @@
 {
   "name": "graphql-jay",
-  "description": "GraphQL schema generator for composing objects over JSON-based services",
+  "description": "GraphQL schema generator for composing data over JSON-based services",
   "version": "0.1.0",
   "license": "MIT",
   "keywords": [
     "graphql",
     "rest",
-    "restful",
+    "json",
     "json-rpc",
     "json-schema",
     "json-hyper-schema"
