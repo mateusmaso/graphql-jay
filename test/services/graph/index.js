@@ -1,7 +1,7 @@
-import fetch from "isomorphic-fetch";
-import {introspectionQuery} from "graphql";
+import fetch from "isomorphic-fetch"
+import {introspectionQuery} from "graphql"
 
-var url = "http://localhost:8080/api/graph";
+var url = "http://localhost:8080/api/graph"
 
 export default function graph() {
   return fetch(url, {
@@ -14,11 +14,18 @@ export default function graph() {
     },
     method: 'POST'
   }).then((response) => {
-    return response.json();
+    return response.json()
   }).then((response) => {
+    var wrapper = {
+      User: {
+        "imageUrl": "image.small"
+      }
+    }
+
     return {
       url,
-      schema: response.data
-    };
-  });
-};
+      schema: response.data,
+      wrapper
+    }
+  })
+}

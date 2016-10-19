@@ -1,72 +1,88 @@
-import deepAssign from "deep-assign";
-import {buildClientSchema} from "graphql";
-import {mergeSchema} from "./mergeSchema";
-import {simplifyAST} from "./simplifyAST";
-import {reduceASTs} from "./reduceASTs";
-import {buildRequest} from "./buildRequest";
-import {forgeData} from "./forgeData";
-import {fetchData} from "./fetchData";
-import {transformAST} from "./transformAST";
+import {buildClientSchema} from "graphql"
+import {deepExtendSchema} from "./deepExtendSchema"
+import {wrapData} from "./wrapData"
+import {wrapSchema} from "./wrapSchema"
+import {unwrapAST} from "./unwrapAST"
+import {simplifyAST} from "./simplifyAST"
+import {reduceASTs} from "./reduceASTs"
+import {fetchData} from "./fetchData"
+import {transformAST} from "./transformAST"
+import deepAssign from "deep-assign"
 
 export function composeSchema(...services) {
   return Promise.all(services.map((service) => {
-    return service();
-  })).then((services) => {
-    var schemas = services.map((service) => {
-      var {schema, adapter} = service;
+    return service()
+  })).then((serviceInfos) => {
+    return Promise.all(serviceInfos.map((serviceInfo) => {
+      var {schema, adapter} = serviceInfo
 
       if (adapter) {
-        return adapter.buildClientSchema(schema);
+        return adapter.buildClientSchema(schema)
       } else {
-        return buildClientSchema(schema);
+        return buildClientSchema(schema)
       }
-    });
+    })).then((clientSchemas) => {
+      return Promise.all(serviceInfos.map((serviceInfo, index) => {
+        var {wrapper} = serviceInfo
+        var clientSchema = clientSchemas[index]
+        return wrapSchema(clientSchema, wrapper)
+      })).then((clientSchemasWrapped) => {
+        return deepExtendSchema(...clientSchemasWrapped).then((rootClientSchema) => {
+          var queryFields = rootClientSchema.getQueryType().getFields()
 
-    return mergeSchema(...schemas).then((rootSchema) => {
-      var queryFields = rootSchema.getQueryType().getFields();
+          Object.keys(queryFields).forEach((queryFieldName) => {
+            var queryField = queryFields[queryFieldName]
 
-      Object.keys(queryFields).forEach((queryFieldName) => {
-        var queryField = queryFields[queryFieldName];
+            queryField.resolve = (parent, args, context, info) => {
+              var rootAST = simplifyAST({
+                "selectionSet": {
+                  "kind": "SelectionSet",
+                  "selections": info.fieldASTs
+                }
+              }, info)
 
-        queryField.resolve = (parent, args, context, info) => {
-          var rootAST = simplifyAST({
-            "selectionSet": {
-              "kind": "SelectionSet",
-              "selections": info.fieldASTs
+              var asts = serviceInfos.map((serviceInfo, index) => {
+                var {schema, adapter} = serviceInfo
+                var clientSchema = clientSchemasWrapped[index]
+
+                if (adapter) {
+                  return adapter.transformAST(schema, clientSchema, rootAST)
+                } else {
+                  return transformAST(schema, clientSchema, rootAST)
+                }
+              })
+
+              reduceASTs(rootAST, ...asts)
+
+              var requests = serviceInfos.map((serviceInfo, index) => {
+                var {schema, adapter, url, wrapper} = serviceInfo
+                var clientSchemaWrapped = clientSchemasWrapped[index]
+                var clientSchema = clientSchemas[index]
+                var ast = unwrapAST(asts[index], clientSchemaWrapped, wrapper)
+                var request
+
+                if (adapter) {
+                  request = adapter.fetchData(schema, ast, url)
+                } else {
+                  request = fetchData(schema, ast, url)
+                }
+
+                return request.then((data) => {
+                  return wrapData(data, clientSchema, wrapper)
+                })
+              })
+
+              return Promise.all(requests).then((responses) => {
+                return deepAssign(...responses)
+              }).then((response) => {
+                return response[info.fieldName]
+              })
             }
-          }, info).fields;
+          })
 
-          var asts = services.map((service) => {
-            var {schema, adapter} = service;
-
-            if (adapter) {
-              return adapter.transformAST(schema, rootAST);
-            } else {
-              return transformAST(schema, rootAST);
-            }
-          });
-
-          reduceASTs(rootAST, ...asts);
-
-          var requests = services.map((service) => {
-            var {schema, adapter, url} = service;
-            var index = services.indexOf(service);
-            var ast = asts[index];
-
-            if (adapter) {
-              return adapter.buildRequest(schema, ast, url);
-            } else {
-              return buildRequest(schema, ast, url);
-            }
-          });
-
-          return fetchData(...requests).then((data) => {
-            return deepAssign(forgeData(rootSchema, rootAST), data[info.fieldName]);
-          });
-        }
-      });
-
-      return rootSchema;
-    });
-  });
+          return rootClientSchema
+        })
+      })
+    })
+  })
 }

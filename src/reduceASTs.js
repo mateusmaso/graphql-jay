@@ -1,63 +1,83 @@
-import keypath from 'keypath';
-import traverse from 'traverse';
+import keypath from 'keypath'
+import traverse from 'traverse'
 
 export function reduceASTs(rootAST, ...asts) {
-  var rootFields = fieldsFor(rootAST);
+  var rootFieldPaths = fieldPathsFor(rootAST)
 
   asts.sort((ast) => {
-    return heuristic(rootFields, ast);
-  }).reverse();
+    return heuristic(rootFieldPaths, ast)
+  }).reverse()
 
   asts.forEach((ast) => {
-    var index = asts.indexOf(ast);
-    var fields = fieldsFor(ast);
+    var index = asts.indexOf(ast)
+    var fieldPaths = fieldPathsFor(ast)
 
     asts.slice(index + 1).forEach((_ast) => {
-      reduceAST(_ast, fields);
-    });
-  });
+      reduceAST(_ast, fieldPaths)
+    })
+  })
 }
 
-function reduceAST(ast, fields) {
-  fields.forEach((field) => {
-    if (keypath(field, ast)) {
-      var _ = field.split(".");
-      var lastKey = _[_.length - 1];
-      _.pop();
-      var key = _.join(".")
-      var obj = keypath(key, ast);
-      delete obj[lastKey];
+function deleteFieldPath(ast, fieldPath) {
+  var keys = fieldPath.split(".")
+  var lastKey = keys[keys.length - 1]
+  keys.pop()
+  var key = keys.join(".")
+  var obj = keypath(key, ast)
+  delete obj[lastKey]
+}
+
+function reduceAST(ast, fieldPaths) {
+  var objectFieldPaths = []
+
+  fieldPaths.forEach((fieldPath) => {
+    var field = keypath(fieldPath, ast)
+
+    if (field) {
+      if (Object.keys(field.fields).length > 0) {
+        objectFieldPaths.push(fieldPath)
+      } else {
+        deleteFieldPath(ast, fieldPath)
+      }
     }
-  });
+  })
+
+  objectFieldPaths.reverse().forEach((objectFieldPath) => {
+    var field = keypath(objectFieldPath, ast)
+
+    if (Object.keys(field.fields).length == 0) {
+      deleteFieldPath(ast, objectFieldPath)
+    }
+  })
 }
 
-function heuristic(rootFields, ast) {
-  var fields = fieldsFor(ast);
-  var totalFields = rootFields.length;
-  var totalFieldsIncluded = 0;
-  var totalFieldsExtra = 0;
+function heuristic(rootFieldPaths, ast) {
+  var fieldPaths = fieldPathsFor(ast)
+  var totalFields = rootFieldPaths.length
+  var totalFieldsIncluded = 0
+  var totalFieldsExtra = 0
 
-  fields.forEach((field) => {
-    if (rootFields.indexOf(field) >= 0) {
-      totalFieldsIncluded++;
+  fieldPaths.forEach((fieldPath) => {
+    if (rootFieldPaths.indexOf(fieldPath) >= 0) {
+      totalFieldsIncluded++
     } else {
-      totalFieldsExtra++;
+      totalFieldsExtra++
     }
-  });
+  })
 
-  return ((totalFieldsIncluded/totalFields) * (1 - (0.01 * totalFieldsExtra)));
+  return ((totalFieldsIncluded/totalFields) * (1 - (0.01 * totalFieldsExtra)))
 }
 
-function fieldsFor(ast) {
-  var fields = [];
+function fieldPathsFor(ast) {
+  var fieldPaths = []
 
   traverse(ast).forEach(function(value) {
-    var isFields = this.path[this.path.length - 2] == "fields";
+    var isFields = this.path[this.path.length - 2] == "fields"
 
     if (isFields) {
-      fields.push(this.path.join("."));
+      fieldPaths.push(this.path.join("."))
     }
-  });
+  })
 
-  return fields;
+  return fieldPaths
 }

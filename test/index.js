@@ -1,18 +1,18 @@
-import {expect} from "chai";
-import {graphql} from "graphql";
-import {composeSchema} from "../lib";
-import {graph, graph2, graph3} from "./services";
+import {expect} from "chai"
+import {graphql} from "graphql"
+import {composeSchema} from "../lib"
+import {graph, graph2, graph3} from "./services"
 
-var graphQLJaySchema;
+var graphQLJaySchema
 
 describe("graphql-jay", () => {
   before(() => {
     return composeSchema(graph, graph2, graph3).then((schema) => {
-      graphQLJaySchema = schema;
+      graphQLJaySchema = schema
     }).catch((error) => {
-      console.log("Error", error);
-    });
-  });
+      console.log("Error", error)
+    })
+  })
 
   it("should request user", () => {
     return graphql(graphQLJaySchema, `{
@@ -21,13 +21,11 @@ describe("graphql-jay", () => {
         age
         name
         email
-        image {
-          small
-        }
+        imageUrl
       }
     }`).then((response) => {
       console.log("Response", JSON.stringify(response))
-      expect(response.data).to.have.keys("user");
-    });
-  });
-});
+      expect(response.data).to.have.keys("user")
+    })
+  })
+})
