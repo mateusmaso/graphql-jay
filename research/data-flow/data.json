@@ -19,16 +19,16 @@
     "codeSize": 16.794,
     "responseTime": 5585.289,
     "responseSize": 202.286,
-    "requestCount": 357,
-    "answerRate": 1,
+    "requestCount": 201,
+    "answerRate": 0.66,
     "overheadTime": 0,
-    "didFetchData": true,
-    "codeSize**": null,
-    "responseTime**": null,
-    "responseSize**": null,
-    "requestCount**": null,
-    "answerRate**": null,
-    "codeAdded**": null,
-    "codeRemoved**": null
+    "didFetchData": false,
+    "codeSize**": 16.825,
+    "responseTime**": 5585.289,
+    "responseSize**": 202.286,
+    "requestCount**": 357,
+    "answerRate**": 1,
+    "codeAdded**": 67,
+    "codeRemoved**": 36
   }
 }

@@ -12,7 +12,7 @@ export default function q1() {
       Bluebird.each(films, (film) => {
         return resolveField(film, "characters").then(() => {
           return Bluebird.each(film.characters, (character) => {
-            return resolveField(character, "homeworld")
+            return fetch(`http://localhost:8000/api/people/${character.id}/homeworld`)
           })
         })
       }).then(() => {
