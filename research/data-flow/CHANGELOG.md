@@ -4,5 +4,5 @@
 
 **Realocation**
 
-- ```homeworld``` data from URI ```/people/:id``` Removed
-- URI ```/people/:id/homeworld``` Added
+- ```homeworld``` field from URI ```/people/:id``` removed.
+- URI ```/people/:id/homeworld``` added.
