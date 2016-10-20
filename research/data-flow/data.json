@@ -2,7 +2,7 @@
   "with": {
     "codeSize": 23.137,
     "responseTime": 6503.038,
-    "responseSize": 225728,
+    "responseSize": 225.728,
     "requestCount": 360,
     "overheadTime": 2888.054,
     "couldFetchData": true,
@@ -17,7 +17,7 @@
   "without": {
     "codeSize": 16.794,
     "responseTime": 5585.289,
-    "responseSize": 202286,
+    "responseSize": 202.286,
     "requestCount": 357,
     "overheadTime": 0,
     "couldFetchData": true,
