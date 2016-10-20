@@ -9,15 +9,7 @@ export default function q3() {
       return response.json()
     }).then((aNewHope) => {
       resolveField(aNewHope, "starships").then(() => {
-        return Bluebird.each(aNewHope.starships, (starship) => {
-          return resolveField(starship, "pilots")
-        })
-      }).then(() => {
-        return resolveField(aNewHope, "vehicles").then(() => {
-          return Bluebird.each(aNewHope.vehicles, (vehicle) => {
-            return resolveField(vehicle, "pilots")
-          })
-        })
+        return resolveField(aNewHope, "vehicles")
       }).then(() => {
         var pilots = []
 
