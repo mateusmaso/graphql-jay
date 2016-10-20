@@ -1,8 +1,8 @@
 {
   "with": {
     "codeSize": 23.137,
-    "responseTime": 6503.038,
-    "responseSize": 225.728,
+    "responseTime": 6520.312,
+    "responseSize": 226.423,
     "requestCount": 360,
     "overheadTime": 2888.054,
     "couldFetchData": true,
@@ -16,8 +16,8 @@
   },
   "without": {
     "codeSize": 16.794,
-    "responseTime": 5585.289,
-    "responseSize": 202.286,
+    "responseTime": 5600.631,
+    "responseSize": 203.524,
     "requestCount": 357,
     "overheadTime": 0,
     "couldFetchData": true,
