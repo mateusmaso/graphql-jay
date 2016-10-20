@@ -4,5 +4,5 @@
 
 **Realocation**
 
-- Add /tatooine URI
-- Add /films/1/characters URI
+- URI ```/tatooine``` Added
+- URI ```/films/1/characters``` Added
