@@ -4,4 +4,4 @@
 
 **Realocation**
 
-- Rename URI /films/:id to /movies/:id
+- URI ```/films/:id``` renamed to ```/movies/:id```
