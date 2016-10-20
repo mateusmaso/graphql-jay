@@ -3,19 +3,19 @@ import {graphql} from "graphql"
 import {composeSchema} from "../lib"
 import {graph, graph2, graph3} from "./services"
 
-var graphQLJaySchema
-
 describe("graphql-jay", () => {
+  var schema
+
   before(() => {
-    return composeSchema(graph, graph2, graph3).then((schema) => {
-      graphQLJaySchema = schema
+    return composeSchema(graph, graph2, graph3).then((_) => {
+      schema = _
     }).catch((error) => {
-      console.log("Error", error)
+      console.warn(error)
     })
   })
 
   it("should request user", () => {
-    return graphql(graphQLJaySchema, `{
+    return graphql(schema, `{
       user(id: 1) {
         id
         age
@@ -24,7 +24,7 @@ describe("graphql-jay", () => {
         imageUrl
       }
     }`).then((response) => {
-      console.log("Response", JSON.stringify(response))
+      console.log(JSON.stringify(response))
       expect(response.data).to.have.keys("user")
     })
   })

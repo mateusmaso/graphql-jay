@@ -1,4 +1,6 @@
 import {adapter} from "graphql-jay-hyperschema"
+import fetch from "isomorphic-fetch"
+import perf from "../../../perf"
 
 var url = "http://localhost:8000/api"
 
@@ -16,7 +18,8 @@ export default function swapi() {
       url,
       schema,
       adapter,
-      wrapper
+      wrapper,
+      fetch: perf.monitorFetch(fetch)
     }
   })
 }

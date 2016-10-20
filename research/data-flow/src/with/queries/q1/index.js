@@ -1,10 +1,15 @@
 import fetch from "isomorphic-fetch"
 import {graphql} from "graphql"
 import {composeSchema} from "graphql-jay"
+import perf from "../../../perf"
 
 export default function q1(services) {
+  perf.schemaCreation()
   return new Promise((resolve) => {
     composeSchema(...services).then((schema) => {
+      perf.schemaCreationEnd()
+      perf.schemaFetching()
+
       graphql(schema, `{
         allFilms {
           title
@@ -15,8 +20,9 @@ export default function q1(services) {
           }
         }
       }`).then((response) => {
-        var films = response.data.allFilms
+        perf.schemaFetchingEnd()
 
+        var films = response.data.allFilms
         var filmWithDesertCharacters = films.map((film) => {
           var count = 0
 

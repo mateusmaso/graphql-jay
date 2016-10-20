@@ -1,10 +1,11 @@
 import fetch from "isomorphic-fetch"
 
-export function fetchData(schema, ast, url) {
+export function fetchData(schema, ast, url, fetchFn) {
   var query = buildQuery(ast)
+  var performFetch = fetchFn || fetch
 
   if (query) {
-    return fetch(url, {
+    return performFetch(url, {
       body: JSON.stringify({
         query
       }),

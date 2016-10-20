@@ -2,10 +2,15 @@ import fetch from "isomorphic-fetch"
 import {graphql} from "graphql"
 import {composeSchema} from "graphql-jay"
 import groupBy from "group-by"
+import perf from "../../../perf"
 
 export default function q2(services) {
+  perf.schemaCreation()
   return new Promise((resolve) => {
     composeSchema(...services).then((schema) => {
+      perf.schemaCreationEnd()
+      perf.schemaFetching()
+
       return graphql(schema, `{
         planet(planetID: 1) {
           residents {
@@ -15,8 +20,9 @@ export default function q2(services) {
           }
         }
       }`).then((response) => {
-        var tatooine = response.data.planet
+        perf.schemaFetchingEnd()
 
+        var tatooine = response.data.planet
         var residentsBySpecies = groupBy(tatooine.residents, (resident) => {
           var name
 

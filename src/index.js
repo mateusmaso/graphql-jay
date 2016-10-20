@@ -9,3 +9,7 @@ export {
 export {
   fetchData
 } from "./fetchData"
+
+export {
+  buildSchema
+} from "./buildSchema"

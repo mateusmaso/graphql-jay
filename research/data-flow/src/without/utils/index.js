@@ -1,4 +1,5 @@
 import Bluebird from "bluebird"
+import perf from "../../perf"
 
 export function resolveField(object, fieldName) {
   var field = object[fieldName]
@@ -7,14 +8,14 @@ export function resolveField(object, fieldName) {
     object[fieldName] = []
 
     return Bluebird.each(field, (url) => {
-      return fetch(url).then((response) => {
+      return perf.monitorFetch(fetch)(url).then((response) => {
         return response.json()
       }).then((response) => {
         object[fieldName].push(response)
       })
     })
   } else {
-    return fetch(field).then((response) => {
+    return perf.monitorFetch(fetch)(field).then((response) => {
       return response.json()
     }).then((response) => {
       object[fieldName] = response

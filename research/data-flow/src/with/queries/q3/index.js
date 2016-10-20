@@ -2,10 +2,15 @@ import fetch from "isomorphic-fetch"
 import {graphql} from "graphql"
 import {composeSchema} from "graphql-jay"
 import groupBy from "group-by"
+import perf from "../../../perf"
 
 export default function q3(services) {
+  perf.schemaCreation()
   return new Promise((resolve) => {
     composeSchema(...services).then((schema) => {
+      perf.schemaCreationEnd()
+      perf.schemaFetching()
+
       return graphql(schema, `{
         film(filmID: 1) {
           starships {
@@ -20,6 +25,8 @@ export default function q3(services) {
           }
         }
       }`).then((response) => {
+        perf.schemaFetchingEnd()
+
         var aNewHope = response.data.film
         var pilots = []
 

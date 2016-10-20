@@ -1,4 +1,4 @@
-import {buildClientSchema} from "graphql"
+import {buildSchema} from "./buildSchema"
 import {deepExtendSchema} from "./deepExtendSchema"
 import {wrapData} from "./wrapData"
 import {wrapSchema} from "./wrapSchema"
@@ -17,9 +17,9 @@ export function composeSchema(...services) {
       var {schema, adapter} = serviceInfo
 
       if (adapter) {
-        return adapter.buildClientSchema(schema)
+        return adapter.buildSchema(schema)
       } else {
-        return buildClientSchema(schema)
+        return buildSchema(schema)
       }
     })).then((clientSchemas) => {
       return Promise.all(serviceInfos.map((serviceInfo, index) => {
@@ -55,16 +55,16 @@ export function composeSchema(...services) {
               reduceASTs(rootAST, ...asts)
 
               var requests = serviceInfos.map((serviceInfo, index) => {
-                var {schema, adapter, url, wrapper} = serviceInfo
+                var {schema, adapter, url, wrapper, fetch} = serviceInfo
                 var clientSchemaWrapped = clientSchemasWrapped[index]
                 var clientSchema = clientSchemas[index]
                 var ast = unwrapAST(asts[index], clientSchemaWrapped, wrapper)
                 var request
 
                 if (adapter) {
-                  request = adapter.fetchData(schema, ast, url)
+                  request = adapter.fetchData(schema, ast, url, fetch)
                 } else {
-                  request = fetchData(schema, ast, url)
+                  request = fetchData(schema, ast, url, fetch)
                 }
 
                 return request.then((data) => {
