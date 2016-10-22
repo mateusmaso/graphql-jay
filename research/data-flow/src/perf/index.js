@@ -6,9 +6,11 @@ var requestCount = 0
 var overheadTime = 0
 
 function monitorFetch(fetch) {
-  return function() {
+  return function(a) {
     requestCount++
     var fetchTime = now()
+
+    console.log(a)
 
     return fetch.apply(this, arguments).then((response) => {
       responseTime += (now() - fetchTime)
