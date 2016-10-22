@@ -19,11 +19,15 @@ var _groupBy = require("group-by");
 
 var _groupBy2 = _interopRequireDefault(_groupBy);
 
+var _perf = require("../../../perf");
+
+var _perf2 = _interopRequireDefault(_perf);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function q3() {
   return new Promise(function (resolve) {
-    (0, _isomorphicFetch2.default)("http://localhost:8000/api/films/1").then(function (response) {
+    _perf2.default.monitorFetch(_isomorphicFetch2.default)("http://localhost:8000/api/films/1").then(function (response) {
       return response.json();
     }).then(function (aNewHope) {
       (0, _utils.resolveField)(aNewHope, "starships").then(function () {

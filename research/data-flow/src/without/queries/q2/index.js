@@ -2,10 +2,11 @@ import fetch from "isomorphic-fetch"
 import Bluebird from "bluebird"
 import {resolveField} from "../../utils"
 import groupBy from "group-by"
+import perf from "../../../perf"
 
 export default function q2() {
   return new Promise((resolve) => {
-    fetch("http://localhost:8000/api/planets/1").then((response) => {
+    perf.monitorFetch(fetch)("http://localhost:8000/api/planets/1").then((response) => {
       return response.json()
     }).then((tatooine) => {
       resolveField(tatooine, "residents").then(() => {
