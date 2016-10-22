@@ -10,8 +10,6 @@ function monitorFetch(fetch) {
     requestCount++
     var fetchTime = now()
 
-    console.log(a)
-
     return fetch.apply(this, arguments).then((response) => {
       responseTime += (now() - fetchTime)
       return response.clone().text().then((text) => {

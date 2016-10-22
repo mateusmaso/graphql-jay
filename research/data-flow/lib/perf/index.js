@@ -20,8 +20,6 @@ function monitorFetch(fetch) {
     requestCount++;
     var fetchTime = (0, _performanceNow2.default)();
 
-    console.log(a);
-
     return fetch.apply(this, arguments).then(function (response) {
       responseTime += (0, _performanceNow2.default)() - fetchTime;
       return response.clone().text().then(function (text) {
