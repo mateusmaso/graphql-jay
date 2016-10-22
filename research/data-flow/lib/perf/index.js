@@ -16,7 +16,7 @@ var requestCount = 0;
 var overheadTime = 0;
 
 function monitorFetch(fetch) {
-  return function () {
+  return function (a) {
     requestCount++;
     var fetchTime = (0, _performanceNow2.default)();
 
