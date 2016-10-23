@@ -26,7 +26,7 @@ function q1() {
     }).then(function (response) {
       var films = response.results;
 
-      _bluebird2.default.each(films, function (film) {
+      return _bluebird2.default.each(films, function (film) {
         return (0, _utils.resolveField)(film, "characters").then(function () {
           return _bluebird2.default.each(film.characters, function (character) {
             return (0, _utils.resolveField)(character, "homeworld");
@@ -54,6 +54,8 @@ function q1() {
 
         resolve("Q1: " + filmWithDesertCharacters[0].film.title);
       });
+    }).catch(function () {
+      resolve("Q1: ?");
     });
   });
 }

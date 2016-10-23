@@ -61,6 +61,8 @@ function q3() {
 
         resolve("Q3: " + pilotNames[0]);
       });
+    }).catch(function () {
+      resolve("Q3: ?");
     });
   });
 }
