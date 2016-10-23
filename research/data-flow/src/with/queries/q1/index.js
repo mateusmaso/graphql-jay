@@ -35,6 +35,8 @@ export default function q1(schema) {
       })
 
       resolve(`Q1: ${filmWithDesertCharacters[0].film.title}`)
+    }).catch(() => {
+      resolve(`Q1: ?`)
     })
   })
 }

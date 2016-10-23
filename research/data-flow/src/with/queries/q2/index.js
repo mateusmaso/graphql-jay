@@ -34,6 +34,8 @@ export default function q2(schema) {
       })
 
       resolve(`Q2: ${specieNames[0]}`)
+    }).catch(() => {
+      resolve(`Q2: ?`)
     })
   })
 }
