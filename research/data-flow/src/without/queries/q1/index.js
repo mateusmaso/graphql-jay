@@ -10,7 +10,7 @@ export default function q1() {
     }).then((response) => {
       var films = response.results
 
-      Bluebird.each(films, (film) => {
+      return Bluebird.each(films, (film) => {
         return resolveField(film, "characters").then(() => {
           return Bluebird.each(film.characters, (character) => {
             return resolveField(character, "homeworld")
@@ -37,9 +37,9 @@ export default function q1() {
         })
 
         resolve(`Q1: ${filmWithDesertCharacters[0].film.title}`)
-      }).catch(() => {
-        resolve(`Q1: ?`)
       })
+    }).catch(() => {
+      resolve(`Q1: ?`)
     })
   })
 }

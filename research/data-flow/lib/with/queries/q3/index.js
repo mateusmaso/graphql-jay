@@ -44,6 +44,8 @@ function q3(schema) {
       });
 
       resolve("Q3: " + pilotNames[0]);
+    }).catch(function () {
+      resolve("Q3: ?");
     });
   });
 }

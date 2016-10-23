@@ -39,6 +39,8 @@ function q1(schema) {
       });
 
       resolve("Q1: " + filmWithDesertCharacters[0].film.title);
+    }).catch(function () {
+      resolve("Q1: ?");
     });
   });
 }
