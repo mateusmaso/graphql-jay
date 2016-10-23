@@ -1,11 +1,11 @@
 import fetch from "isomorphic-fetch"
 import Bluebird from "bluebird"
 import {resolveField} from "../../utils"
-import perf from "../../../perf"
+import {monitorFetch} from "../../../perf"
 
 export default function q1() {
   return new Promise((resolve) => {
-    perf.monitorFetch(fetch)("http://localhost:8000/api/films").then((response) => {
+    monitorFetch(fetch)("http://localhost:8000/api/films").then((response) => {
       return response.json()
     }).then((response) => {
       var films = response.results
