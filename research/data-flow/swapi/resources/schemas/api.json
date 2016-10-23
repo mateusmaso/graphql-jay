@@ -628,7 +628,7 @@
   },
   "links": [{
     "rel": "allFilms",
-    "href": "/films",
+    "href": "/movies",
     "targetSchema": {
       "type": "object",
       "properties": {
@@ -642,7 +642,7 @@
     }
   }, {
     "rel": "film",
-    "href": "/films/{filmID}",
+    "href": "/movies/{filmID}",
     "schema": {
       "type": "object",
       "properties": {

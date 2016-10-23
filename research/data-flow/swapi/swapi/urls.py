@@ -12,7 +12,7 @@ router = routers.DefaultRouter()
 
 router.register(r"people", views.PeopleViewSet)
 router.register(r"planets", views.PlanetViewSet)
-router.register(r"films", views.FilmViewSet)
+router.register(r"movies", views.FilmViewSet)
 router.register(r"species", views.SpeciesViewSet)
 router.register(r"vehicles", views.VehicleViewSet)
 router.register(r"starships", views.StarshipViewSet)
