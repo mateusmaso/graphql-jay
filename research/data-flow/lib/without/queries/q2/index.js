@@ -21,13 +21,11 @@ var _groupBy2 = _interopRequireDefault(_groupBy);
 
 var _perf = require("../../../perf");
 
-var _perf2 = _interopRequireDefault(_perf);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function q2() {
   return new Promise(function (resolve) {
-    _perf2.default.monitorFetch(_isomorphicFetch2.default)("http://localhost:8000/api/planets/1").then(function (response) {
+    (0, _perf.monitorFetch)(_isomorphicFetch2.default)("http://localhost:8000/api/planets/1").then(function (response) {
       return response.json();
     }).then(function (tatooine) {
       (0, _utils.resolveField)(tatooine, "residents").then(function () {

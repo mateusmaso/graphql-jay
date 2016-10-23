@@ -7,12 +7,14 @@ exports.default = run;
 
 var _queries = require("./queries");
 
+var _graphqlJay = require("graphql-jay");
+
 var _services = require("./services");
 
-function run() {
-  var services = [_services.swapi];
+var _perf = require("../perf");
 
-  return Promise.all([(0, _queries.q1)(services), (0, _queries.q2)(services), (0, _queries.q3)(services)]).then(function (response) {
-    console.log("with", response);
+function run() {
+  return (0, _perf.monitorComposeSchema)(_graphqlJay.composeSchema)(_services.swapi).then(function (schema) {
+    return Promise.all([(0, _queries.q1)(schema), (0, _queries.q2)(schema), (0, _queries.q3)(schema)]);
   });
 }

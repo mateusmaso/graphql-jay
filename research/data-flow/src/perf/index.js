@@ -5,8 +5,8 @@ var responseSize = 0
 var requestCount = 0
 var overheadTime = 0
 
-function monitorFetch(fetch) {
-  return function(a) {
+export function monitorFetch(fetch) {
+  return function() {
     requestCount++
     var fetchTime = now()
 
@@ -20,30 +20,31 @@ function monitorFetch(fetch) {
   }
 }
 
-var schemaCreationTime
-var schemaFetchingTime
+export function monitorGraphQL(graphql) {
+  return function() {
+    var queryTime = now()
 
-function schemaCreation() {
-  schemaCreationTime = now()
+    return graphql.apply(this, arguments).then((response) => {
+      overheadTime += (now() - queryTime)
+      return response
+    })
+  }
 }
 
-function schemaCreationEnd() {
-  overheadTime += now() - schemaCreationTime
-  schemaCreationTime = 0
+export function monitorComposeSchema(composeSchema) {
+  return function() {
+    var composeTime = now()
+
+    return composeSchema.apply(this, arguments).then((response) => {
+      overheadTime += (now() - composeTime)
+      return response
+    })
+  }
 }
 
-function schemaFetching() {
-  schemaFetchingTime = now()
-}
-
-function schemaFetchingEnd() {
-  overheadTime += now() - schemaFetchingTime
-  schemaFetchingTime = 0
-}
-
-function clean() {
+export default function perf() {
   if (overheadTime != 0) {
-    overheadTime -= responseTime
+    overheadTime = overheadTime - responseTime
   }
 
   var data = {
@@ -60,14 +61,3 @@ function clean() {
 
   return data
 }
-
-var perf = {
-  monitorFetch,
-  schemaCreation,
-  schemaCreationEnd,
-  schemaFetching,
-  schemaFetchingEnd,
-  clean
-}
-
-export default perf
