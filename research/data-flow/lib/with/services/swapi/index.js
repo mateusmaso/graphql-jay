@@ -13,8 +13,6 @@ var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
 
 var _perf = require("../../../perf");
 
-var _perf2 = _interopRequireDefault(_perf);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var url = "http://localhost:8000/api";
@@ -34,7 +32,7 @@ function swapi() {
       schema: schema,
       adapter: _graphqlJayHyperschema.adapter,
       wrapper: wrapper,
-      fetch: _perf2.default.monitorFetch(_isomorphicFetch2.default)
+      fetch: (0, _perf.monitorFetch)(_isomorphicFetch2.default)
     };
   });
 }
