@@ -115,11 +115,7 @@ class SpeciesSerializer(serializers.HyperlinkedModelSerializer):
 
 class VehicleSerializer(serializers.HyperlinkedModelSerializer):
 
-    pilots = serializers.HyperlinkedRelatedField(
-        many=True,
-        read_only=True,
-        view_name='people-detail'
-    )
+    pilots = PeopleSerializer(many=True, read_only=True)
 
     class Meta:
         model = Vehicle
@@ -142,14 +138,9 @@ class VehicleSerializer(serializers.HyperlinkedModelSerializer):
             "url"
         )
 
-
 class StarshipSerializer(serializers.HyperlinkedModelSerializer):
 
-    pilots = serializers.HyperlinkedRelatedField(
-        many=True,
-        read_only=True,
-        view_name="people-detail"
-    )
+    pilots = PeopleSerializer(many=True, read_only=True)
 
     class Meta:
         model = Starship
@@ -173,4 +164,3 @@ class StarshipSerializer(serializers.HyperlinkedModelSerializer):
             "edited",
             "url"
         )
-

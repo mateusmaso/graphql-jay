@@ -1,16 +1,16 @@
 {
   "with": {
     "answerRate": 1,
-    "responseTime": 7222.882637000024,
-    "responseSize": 225728,
-    "requestCount": 360,
-    "overheadTime": 408.1161919999777
+    "responseTime": 7507.570643999994,
+    "responseSize": 225389,
+    "requestCount": 351,
+    "overheadTime": 409.47727800000393
   },
   "without": {
-    "answerRate": 1,
-    "responseTime": 5645.888848000046,
-    "responseSize": 225728,
-    "requestCount": 360,
+    "answerRate": 0.6666666666666666,
+    "responseTime": 7164.704189999962,
+    "responseSize": 223453,
+    "requestCount": 348,
     "overheadTime": 0
   }
 }

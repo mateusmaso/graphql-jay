@@ -492,17 +492,7 @@
         "edited",
         "url"
       ],
-      "links": [{
-        "rel": "pilots",
-        "href": "{+item}",
-        "each": "pilots",
-        "targetSchema": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/people"
-          }
-        }
-      }]
+      "links": []
     },
     "vehicle": {
       "$schema": "http://json-schema.org/draft-04/schema",
@@ -597,17 +587,7 @@
         "url"
       ]
     },
-    "links": [{
-      "rel": "pilots",
-      "href": "{+item}",
-      "each": "pilots",
-      "targetSchema": {
-        "type": "array",
-        "items": {
-          "$ref": "#/definitions/people"
-        }
-      }
-    }]
+    "links": []
   },
   "properties": {
     "film": {
