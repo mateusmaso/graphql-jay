@@ -37,6 +37,8 @@ export default function q1() {
         })
 
         resolve(`Q1: ${filmWithDesertCharacters[0].film.title}`)
+      }).catch(() => {
+        resolve(`Q1: ?`)
       })
     })
   })

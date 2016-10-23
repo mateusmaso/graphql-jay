@@ -41,6 +41,8 @@ export default function q3() {
         })
 
         resolve(`Q3: ${pilotNames[0]}`)
+      }).catch(() => {
+        resolve(`Q3: ?`)
       })
     })
   })
