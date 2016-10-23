@@ -9,7 +9,7 @@ export default function q2() {
     monitorFetch(fetch)("http://localhost:8000/api/planets/1").then((response) => {
       return response.json()
     }).then((tatooine) => {
-      resolveField(tatooine, "residents").then(() => {
+      return resolveField(tatooine, "residents").then(() => {
         return Bluebird.each(tatooine.residents, (resident) => {
           return resolveField(resident, "species")
         })
@@ -34,6 +34,8 @@ export default function q2() {
 
         resolve(`Q2: ${specieNames[0]}`)
       })
+    }).catch(() => {
+      resolve(`Q2: ?`)
     })
   })
 }

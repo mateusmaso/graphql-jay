@@ -44,7 +44,6 @@ function run() {
 
   return (0, _with2.default)().then(function (response) {
     withData = buildData(response);
-    console.log(withData);
     return (0, _without2.default)();
   }).then(function (response) {
     withoutData = buildData(response);

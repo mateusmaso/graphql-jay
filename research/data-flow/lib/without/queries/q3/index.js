@@ -28,8 +28,16 @@ function q3() {
     (0, _perf.monitorFetch)(_isomorphicFetch2.default)("http://localhost:8000/api/films/1").then(function (response) {
       return response.json();
     }).then(function (aNewHope) {
-      (0, _utils.resolveField)(aNewHope, "starships").then(function () {
-        return (0, _utils.resolveField)(aNewHope, "vehicles");
+      return (0, _utils.resolveField)(aNewHope, "starships").then(function () {
+        return _bluebird2.default.each(aNewHope.starships, function (starship) {
+          return (0, _utils.resolveField)(starship, "pilots");
+        });
+      }).then(function () {
+        return (0, _utils.resolveField)(aNewHope, "vehicles").then(function () {
+          return _bluebird2.default.each(aNewHope.vehicles, function (vehicle) {
+            return (0, _utils.resolveField)(vehicle, "pilots");
+          });
+        });
       }).then(function () {
         var pilots = [];
 
@@ -53,6 +61,8 @@ function q3() {
 
         resolve("Q3: " + pilotNames[0]);
       });
+    }).catch(function () {
+      resolve("Q3: ?");
     });
   });
 }
