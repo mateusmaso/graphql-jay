@@ -28,7 +28,7 @@ function q2() {
     (0, _perf.monitorFetch)(_isomorphicFetch2.default)("http://localhost:8000/api/planets/1").then(function (response) {
       return response.json();
     }).then(function (tatooine) {
-      (0, _utils.resolveField)(tatooine, "residents").then(function () {
+      return (0, _utils.resolveField)(tatooine, "residents").then(function () {
         return _bluebird2.default.each(tatooine.residents, function (resident) {
           return (0, _utils.resolveField)(resident, "species");
         });
@@ -53,6 +53,8 @@ function q2() {
 
         resolve("Q2: " + specieNames[0]);
       });
+    }).catch(function () {
+      resolve("Q2: ?");
     });
   });
 }
