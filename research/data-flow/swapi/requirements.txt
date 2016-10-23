@@ -15,6 +15,7 @@ django-postgrespool==0.3.0
 django-pylibmc==0.5.0
 djangorestframework==3.0.0
 drf-json-api==0.1.0
+drf-nested-routers==0.11.1
 gunicorn==19.1.1
 keen==0.3.7
 markdown2==2.3.0

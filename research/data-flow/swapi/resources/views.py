@@ -2,6 +2,8 @@ from __future__ import unicode_literals
 
 from rest_framework import viewsets
 
+from rest_framework.response import Response
+
 from .models import (
     People,
     Planet,
@@ -17,7 +19,8 @@ from .serializers import (
     FilmSerializer,
     SpeciesSerializer,
     VehicleSerializer,
-    StarshipSerializer
+    StarshipSerializer,
+    TatooineSerializer
 )
 
 
@@ -47,6 +50,20 @@ class PlanetViewSet(viewsets.ReadOnlyModelViewSet):
         return super(PlanetViewSet, self).list(request, *args, **kwargs)
 
 
+class TatooineViewSet(viewsets.ReadOnlyModelViewSet):
+
+    def list(self, request, *args, **kwargs):
+        planet = Planet.objects.get(pk=1)
+
+        serializer_context = {
+            'request': request
+        }
+
+        data = TatooineSerializer(instance=planet, context=serializer_context).data
+
+        return Response(data)
+
+
 class FilmViewSet(viewsets.ReadOnlyModelViewSet):
 
     queryset = Film.objects.all()
@@ -58,6 +75,23 @@ class FilmViewSet(viewsets.ReadOnlyModelViewSet):
 
     def list(self, request, *args, **kwargs):
         return super(FilmViewSet, self).list(request, *args, **kwargs)
+
+
+class FilmCharacterViewSet(viewsets.ReadOnlyModelViewSet):
+
+    def list(self, request, film_pk=None):
+        film = Film.objects.get(pk=1)
+
+        data = []
+
+        serializer_context = {
+            'request': request
+        }
+
+        for character in film.characters.all():
+            data.append(PeopleSerializer(instance=character, context=serializer_context).data)
+
+        return Response(data)
 
 
 class SpeciesViewSet(viewsets.ReadOnlyModelViewSet):

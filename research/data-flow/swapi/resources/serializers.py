@@ -63,11 +63,36 @@ class PlanetSerializer(serializers.HyperlinkedModelSerializer):
         )
 
 
+class TatooineSerializer(serializers.HyperlinkedModelSerializer):
+
+    residents = PeopleSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Planet
+        fields = (
+            "name",
+            "rotation_period",
+            "orbital_period",
+            "diameter",
+            "climate",
+            "gravity",
+            "terrain",
+            "surface_water",
+            "population",
+            "residents",
+            "films",
+            "created",
+            "edited",
+            "url"
+        )
+
+
 class FilmSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Film
         fields = (
+            "id",
             "title",
             "episode_id",
             "opening_crawl",
@@ -173,4 +198,3 @@ class StarshipSerializer(serializers.HyperlinkedModelSerializer):
             "edited",
             "url"
         )
-

@@ -4,7 +4,7 @@ from django.conf.urls import patterns, url, include
 from django.contrib import admin
 admin.autodiscover()
 
-from rest_framework import routers
+from rest_framework_nested import routers
 
 from resources import views
 
@@ -16,7 +16,10 @@ router.register(r"films", views.FilmViewSet)
 router.register(r"species", views.SpeciesViewSet)
 router.register(r"vehicles", views.VehicleViewSet)
 router.register(r"starships", views.StarshipViewSet)
+router.register(r"tatooine", views.TatooineViewSet, base_name="tatooine")
 
+films_router = routers.NestedSimpleRouter(router, r'films', lookup='film')
+films_router.register(r'characters', views.FilmCharacterViewSet, base_name='film-characters')
 
 urlpatterns = patterns("",
     url(r"^admin/", include(admin.site.urls)),
@@ -33,4 +36,5 @@ urlpatterns = patterns("",
     url(r"^api/starships/schema$", "resources.schemas.starships"),
     url(r"^api/schema$", "resources.schemas.api"),
     url(r"^api/", include(router.urls)),
+    url(r'^api/', include(films_router.urls)),
 )
