@@ -1,11 +1,11 @@
 import fetch from "isomorphic-fetch"
 import Bluebird from "bluebird"
 import {resolveField} from "../../utils"
-import perf from "../../../perf"
+import {monitorFetch} from "../../../perf"
 
 export default function q1() {
   return new Promise((resolve) => {
-    perf.monitorFetch(fetch)("http://localhost:8000/api/films").then((response) => {
+    monitorFetch(fetch)("http://localhost:8000/api/films").then((response) => {
       return response.json()
     }).then((response) => {
       var films = response.results
@@ -13,7 +13,7 @@ export default function q1() {
       Bluebird.each(films, (film) => {
         return resolveField(film, "characters").then(() => {
           return Bluebird.each(film.characters, (character) => {
-            return fetch(`http://localhost:8000/api/people/${character.id}/homeworld`)
+            return resolveField(character, "homeworld")
           })
         })
       }).then(() => {

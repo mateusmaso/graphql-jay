@@ -8,7 +8,5 @@ exports.default = run;
 var _queries = require("./queries");
 
 function run() {
-  return Promise.all([(0, _queries.q1)(), (0, _queries.q2)(), (0, _queries.q3)()]).then(function (response) {
-    console.log("without", response);
-  });
+  return Promise.all([(0, _queries.q1)(), (0, _queries.q2)(), (0, _queries.q3)()]);
 }

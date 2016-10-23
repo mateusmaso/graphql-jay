@@ -3,6 +3,10 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.monitorFetch = monitorFetch;
+exports.monitorGraphQL = monitorGraphQL;
+exports.monitorComposeSchema = monitorComposeSchema;
+exports.default = perf;
 
 var _performanceNow = require("performance-now");
 
@@ -16,7 +20,7 @@ var requestCount = 0;
 var overheadTime = 0;
 
 function monitorFetch(fetch) {
-  return function (a) {
+  return function () {
     requestCount++;
     var fetchTime = (0, _performanceNow2.default)();
 
@@ -30,30 +34,31 @@ function monitorFetch(fetch) {
   };
 }
 
-var schemaCreationTime;
-var schemaFetchingTime;
+function monitorGraphQL(graphql) {
+  return function () {
+    var queryTime = (0, _performanceNow2.default)();
 
-function schemaCreation() {
-  schemaCreationTime = (0, _performanceNow2.default)();
+    return graphql.apply(this, arguments).then(function (response) {
+      overheadTime += (0, _performanceNow2.default)() - queryTime;
+      return response;
+    });
+  };
 }
 
-function schemaCreationEnd() {
-  overheadTime += (0, _performanceNow2.default)() - schemaCreationTime;
-  schemaCreationTime = 0;
+function monitorComposeSchema(composeSchema) {
+  return function () {
+    var composeTime = (0, _performanceNow2.default)();
+
+    return composeSchema.apply(this, arguments).then(function (response) {
+      overheadTime += (0, _performanceNow2.default)() - composeTime;
+      return response;
+    });
+  };
 }
 
-function schemaFetching() {
-  schemaFetchingTime = (0, _performanceNow2.default)();
-}
-
-function schemaFetchingEnd() {
-  overheadTime += (0, _performanceNow2.default)() - schemaFetchingTime;
-  schemaFetchingTime = 0;
-}
-
-function clean() {
+function perf() {
   if (overheadTime != 0) {
-    overheadTime -= responseTime;
+    overheadTime = overheadTime - responseTime;
   }
 
   var data = {
@@ -70,14 +75,3 @@ function clean() {
 
   return data;
 }
-
-var perf = {
-  monitorFetch: monitorFetch,
-  schemaCreation: schemaCreation,
-  schemaCreationEnd: schemaCreationEnd,
-  schemaFetching: schemaFetching,
-  schemaFetchingEnd: schemaFetchingEnd,
-  clean: clean
-};
-
-exports.default = perf;

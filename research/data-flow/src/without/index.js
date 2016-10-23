@@ -5,7 +5,5 @@ export default function run() {
     q1(),
     q2(),
     q3()
-  ]).then((response) => {
-    console.log("without", response)
-  })
+  ])
 }

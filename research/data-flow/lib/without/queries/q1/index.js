@@ -17,13 +17,11 @@ var _utils = require("../../utils");
 
 var _perf = require("../../../perf");
 
-var _perf2 = _interopRequireDefault(_perf);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function q1() {
   return new Promise(function (resolve) {
-    _perf2.default.monitorFetch(_isomorphicFetch2.default)("http://localhost:8000/api/films").then(function (response) {
+    (0, _perf.monitorFetch)(_isomorphicFetch2.default)("http://localhost:8000/api/films").then(function (response) {
       return response.json();
     }).then(function (response) {
       var films = response.results;

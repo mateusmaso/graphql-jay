@@ -1,34 +1,16 @@
 {
   "with": {
-    "codeSize": 23.137,
-    "responseTime": 5585.289,
-    "responseSize": 202.286,
-    "requestCount": 357,
     "answerRate": 1,
-    "overheadTime": 2888.054,
-    "didFetchData": true,
-    "codeSize**": null,
-    "responseTime**": null,
-    "responseSize**": null,
-    "requestCount**": null,
-    "answerRate**": null,
-    "codeAdded**": null,
-    "codeRemoved**": null
+    "responseTime": 6008.172633999986,
+    "responseSize": 225728,
+    "requestCount": 360,
+    "overheadTime": 366.2813810000134
   },
   "without": {
-    "codeSize": 16.794,
-    "responseTime": 5585.289,
-    "responseSize": 202.286,
-    "requestCount": 201,
-    "answerRate": 0.66,
-    "overheadTime": 0,
-    "didFetchData": false,
-    "codeSize**": 16.825,
-    "responseTime**": 5585.289,
-    "responseSize**": 202.286,
-    "requestCount**": 357,
-    "answerRate**": 1,
-    "codeAdded**": 67,
-    "codeRemoved**": 36
+    "answerRate": 1,
+    "responseTime": 6175.842107000035,
+    "responseSize": 225728,
+    "requestCount": 360,
+    "overheadTime": 0
   }
 }
