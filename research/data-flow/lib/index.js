@@ -35,10 +35,6 @@ function writeData(data) {
 }
 
 function run() {
-  var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-  var discard = _ref.discard;
-
   var withData = {};
   var withoutData = {};
 
@@ -55,9 +51,7 @@ function run() {
   });
 }
 
-run().then(function () {
-  return run();
-}).then(function (data) {
+run().then(function (data) {
   return writeData(data);
 }).catch(function (error) {
   console.warn(error);

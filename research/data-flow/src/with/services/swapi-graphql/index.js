@@ -1,10 +1,11 @@
 import fetch from "isomorphic-fetch"
 import {introspectionQuery} from "graphql"
+import {monitorFetch} from "../../../perf"
 
 var url = "http://localhost:8080"
 
 export default function swapiGraphQL() {
-  return fetch(url, {
+  return monitorFetch(fetch)(url, {
     body: JSON.stringify({
       query: introspectionQuery,
     }),
