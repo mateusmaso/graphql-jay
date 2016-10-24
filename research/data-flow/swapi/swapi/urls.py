@@ -5,6 +5,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 from rest_framework import routers
+from rest_framework_nested import routers
 
 from resources import views
 
@@ -17,6 +18,8 @@ router.register(r"species", views.SpeciesViewSet)
 router.register(r"vehicles", views.VehicleViewSet)
 router.register(r"starships", views.StarshipViewSet)
 
+people_router = routers.NestedSimpleRouter(router, r'people', lookup='people')
+people_router.register(r'homeworld', views.PeopleHomeworldViewSet, base_name='people-homeworld')
 
 urlpatterns = patterns("",
     url(r"^admin/", include(admin.site.urls)),
@@ -33,4 +36,5 @@ urlpatterns = patterns("",
     url(r"^api/starships/schema$", "resources.schemas.starships"),
     url(r"^api/schema$", "resources.schemas.api"),
     url(r"^api/", include(router.urls)),
+    url(r'^api/', include(people_router.urls)),
 )

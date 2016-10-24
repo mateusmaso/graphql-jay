@@ -11,12 +11,14 @@ var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
 
 var _graphql = require("graphql");
 
+var _perf = require("../../../perf");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var url = "http://localhost:8080";
 
 function swapiGraphQL() {
-  return (0, _isomorphicFetch2.default)(url, {
+  return (0, _perf.monitorFetch)(_isomorphicFetch2.default)(url, {
     body: JSON.stringify({
       query: _graphql.introspectionQuery
     }),

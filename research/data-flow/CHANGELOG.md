@@ -4,5 +4,5 @@
 
 **Realocation**
 
-- ```homeworld``` field from URI ```/people/:id``` removed.
+- URI ```/planet/:id``` removed.
 - URI ```/people/:id/homeworld``` added.

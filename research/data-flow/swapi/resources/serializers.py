@@ -14,14 +14,10 @@ from .models import (
 
 class PeopleSerializer(serializers.HyperlinkedModelSerializer):
 
-    homeworld = serializers.HyperlinkedRelatedField(
-        read_only=True,
-        view_name="planet-detail"
-    )
-
     class Meta:
         model = People
         fields = (
+            "id",
             "name",
             "height",
             "mass",
@@ -86,11 +82,6 @@ class FilmSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class SpeciesSerializer(serializers.HyperlinkedModelSerializer):
-
-    homeworld = serializers.HyperlinkedRelatedField(
-        read_only=True,
-        view_name='planet-detail'
-    )
 
     class Meta:
         model = Species
@@ -173,4 +164,3 @@ class StarshipSerializer(serializers.HyperlinkedModelSerializer):
             "edited",
             "url"
         )
-

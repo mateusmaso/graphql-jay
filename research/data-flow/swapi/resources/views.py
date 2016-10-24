@@ -2,6 +2,10 @@ from __future__ import unicode_literals
 
 from rest_framework import viewsets
 
+from rest_framework.response import Response
+
+from django.http import Http404
+
 from .models import (
     People,
     Planet,
@@ -34,6 +38,21 @@ class PeopleViewSet(viewsets.ReadOnlyModelViewSet):
         return super(PeopleViewSet, self).list(request, *args, **kwargs)
 
 
+class PeopleHomeworldViewSet(viewsets.ReadOnlyModelViewSet):
+
+
+    def list(self, request, people_pk=None):
+        people = People.objects.get(pk=people_pk)
+
+        serializer_context = {
+            'request': request
+        }
+
+        data = PlanetSerializer(instance=people.homeworld, context=serializer_context).data
+
+        return Response(data)
+
+
 class PlanetViewSet(viewsets.ReadOnlyModelViewSet):
 
     queryset = Planet.objects.all()
@@ -41,6 +60,7 @@ class PlanetViewSet(viewsets.ReadOnlyModelViewSet):
     search_fields = ('name',)
 
     def retrieve(self, request, *args, **kwargs):
+        raise Http404
         return super(PlanetViewSet, self).retrieve(request, *args, **kwargs)
 
     def list(self, request, *args, **kwargs):
