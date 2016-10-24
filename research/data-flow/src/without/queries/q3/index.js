@@ -9,7 +9,7 @@ export default function q3() {
     monitorFetch(fetch)("http://localhost:8000/api/films/1").then((response) => {
       return response.json()
     }).then((aNewHope) => {
-      resolveField(aNewHope, "starships").then(() => {
+      return resolveField(aNewHope, "starships").then(() => {
         return Bluebird.each(aNewHope.starships, (starship) => {
           return resolveField(starship, "pilots")
         })

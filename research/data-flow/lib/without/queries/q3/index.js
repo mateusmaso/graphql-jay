@@ -28,7 +28,7 @@ function q3() {
     (0, _perf.monitorFetch)(_isomorphicFetch2.default)("http://localhost:8000/api/films/1").then(function (response) {
       return response.json();
     }).then(function (aNewHope) {
-      (0, _utils.resolveField)(aNewHope, "starships").then(function () {
+      return (0, _utils.resolveField)(aNewHope, "starships").then(function () {
         return _bluebird2.default.each(aNewHope.starships, function (starship) {
           return (0, _utils.resolveField)(starship, "pilots");
         });
