@@ -20,7 +20,8 @@ from .serializers import (
     SpeciesSerializer,
     VehicleSerializer,
     StarshipSerializer,
-    TatooineSerializer
+    PlanetCustomSerializer,
+    PeopleCustomSerializer
 )
 
 
@@ -59,7 +60,7 @@ class TatooineViewSet(viewsets.ReadOnlyModelViewSet):
             'request': request
         }
 
-        data = TatooineSerializer(instance=planet, context=serializer_context).data
+        data = PlanetCustomSerializer(instance=planet, context=serializer_context).data
 
         return Response(data)
 

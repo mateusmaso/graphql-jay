@@ -41,6 +41,19 @@ class PeopleSerializer(serializers.HyperlinkedModelSerializer):
         )
 
 
+class PeopleCustomSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = People
+        fields = (
+            "name",
+            "species",
+            "created",
+            "edited",
+            "url",
+        )
+
+
 class PlanetSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
@@ -63,24 +76,15 @@ class PlanetSerializer(serializers.HyperlinkedModelSerializer):
         )
 
 
-class TatooineSerializer(serializers.HyperlinkedModelSerializer):
+class PlanetCustomSerializer(serializers.HyperlinkedModelSerializer):
 
-    residents = PeopleSerializer(many=True, read_only=True)
+    residents = PeopleCustomSerializer(many=True, read_only=True)
 
     class Meta:
         model = Planet
         fields = (
             "name",
-            "rotation_period",
-            "orbital_period",
-            "diameter",
-            "climate",
-            "gravity",
-            "terrain",
-            "surface_water",
-            "population",
             "residents",
-            "films",
             "created",
             "edited",
             "url"
