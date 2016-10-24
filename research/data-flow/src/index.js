@@ -19,7 +19,7 @@ function writeData(data) {
   return fs.writeFileSync('data.json', JSON.stringify(data, 0, 2))
 }
 
-function run({discard}={}) {
+function run() {
   var withData = {}
   var withoutData = {}
 
@@ -36,9 +36,7 @@ function run({discard}={}) {
   })
 }
 
-run().then(() => {
-  return run()
-}).then((data) => {
+run().then((data) => {
   return writeData(data)
 }).catch((error) => {
   console.warn(error)

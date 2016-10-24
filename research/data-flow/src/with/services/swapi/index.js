@@ -5,7 +5,7 @@ import {monitorFetch} from "../../../perf"
 var url = "http://localhost:8000/api"
 
 export default function swapi() {
-  return fetch(`${url}/schema`).then((response) => {
+  return monitorFetch(fetch)(`${url}/schema`).then((response) => {
     return response.json()
   }).then((schema) => {
     var wrapper = {
