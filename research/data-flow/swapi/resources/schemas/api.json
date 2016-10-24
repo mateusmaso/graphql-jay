@@ -3,6 +3,17 @@
   "title": "swapi",
   "type": "object",
   "definitions": {
+    "allFilms": {
+      "type": "object",
+      "properties": {
+        "results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/film"
+          }
+        }
+      }
+    },
     "film": {
       "$schema": "http://json-schema.org/draft-04/schema",
       "title": "Film",
@@ -39,9 +50,6 @@
         },
         "characters": {
           "type": "array",
-          "items": {
-            "$ref": "#/definitions/people"
-          },
           "description": "The people resources featured within this film."
         },
         "planets": {
@@ -50,16 +58,10 @@
         },
         "starships": {
           "type": "array",
-          "items": {
-            "$ref": "#/definitions/starship"
-          },
           "description": "The starship resources featured within this film."
         },
         "vehicles": {
           "type": "array",
-          "items": {
-            "$ref": "#/definitions/vehicle"
-          },
           "description": "The vehicle resources featured within this film."
         },
         "species": {
@@ -87,7 +89,7 @@
       ],
       "links": [{
         "rel": "characters",
-        "href": "/{id}/characters",
+        "href": "/films/{id}/characters",
         "targetSchema": {
           "type": "array",
           "items": {
@@ -165,7 +167,8 @@
           "description": "The gender of this person (if known)."
         },
         "homeworld": {
-          "$ref": "#/definitions/planet"
+          "type": "string",
+          "description": "The url of the planet resource that this person was born on."
         },
         "films": {
           "type": "array",
@@ -173,9 +176,6 @@
         },
         "species": {
           "type": "array",
-          "items": {
-            "$ref": "#/definitions/species"
-          },
           "description": "The url of the species resource that this person is."
         },
         "vehicles": {
@@ -273,9 +273,6 @@
         },
         "residents": {
           "type": "array",
-          "items": {
-            "$ref": "#/definitions/people"
-          },
           "description": "An array of People URL Resources that live on this planet."
         },
         "url": {
@@ -321,7 +318,7 @@
     },
     "planet-custom": {
       "$schema": "http://json-schema.org/draft-04/schema",
-      "title": "Planet",
+      "title": "PlanetCustom",
       "description": "A planet.",
       "type": "object",
       "properties": {
@@ -550,9 +547,6 @@
         },
         "pilots": {
           "type": "array",
-          "items": {
-            "$ref": "#/definitions/people"
-          },
           "description": "An array of People URL Resources that this starship has been piloted by."
         },
         "url": {
@@ -656,9 +650,6 @@
         },
         "pilots": {
           "type": "array",
-          "items": {
-            "$ref": "#/definitions/people"
-          },
           "description": "An array of People URL Resources that this vehicle has been piloted by."
         },
         "url": {
@@ -703,9 +694,12 @@
           }
         }
       }]
-    },
+    }
   },
   "properties": {
+    "allFilms": {
+      "$ref": "#/definitions/allFilms"
+    },
     "film": {
       "$ref": "#/definitions/film"
     },
@@ -715,7 +709,7 @@
     "planet": {
       "$ref": "#/definitions/planet"
     },
-    "planet-custom": {
+    "tatooine": {
       "$ref": "#/definitions/planet-custom"
     },
     "species": {
@@ -729,15 +723,7 @@
     "rel": "allFilms",
     "href": "/films",
     "targetSchema": {
-      "type": "object",
-      "properties": {
-        "results": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/film"
-          }
-        }
-      }
+      "$ref": "#/definitions/allFilms"
     }
   }, {
     "rel": "film",
@@ -754,6 +740,7 @@
       "$ref": "#/definitions/film"
     }
   }, {
+    "id": "planetWithId",
     "rel": "planet",
     "href": "/planets/{planetID}",
     "schema": {
@@ -772,6 +759,12 @@
     "href": "/tatooine",
     "targetSchema": {
       "$ref": "#/definitions/planet-custom"
+    },
+    "linkRel": {
+      "id": "planetWithId",
+      "values": {
+        "planetID": 1
+      }
     }
   }]
 }

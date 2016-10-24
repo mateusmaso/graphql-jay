@@ -27,8 +27,8 @@ Comparative research on GraphQLJay's usage as a decoupling tool for client-serve
 
 ## Variables
 
-- Response time (ms)
+- Answer rate (%)
 - Response size (kb)
 - Request count (integer)
-- Answer rate (%)
-- Overhead time (ms)
+- Metadata fetching time (ms)
+- Processing time (ms)

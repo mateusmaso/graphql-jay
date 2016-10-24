@@ -18,7 +18,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var url = "http://localhost:8000/api";
 
 function swapi() {
-  return (0, _isomorphicFetch2.default)(url + "/schema").then(function (response) {
+  return (0, _perf.monitorFetch)(_isomorphicFetch2.default)(url + "/schema").then(function (response) {
     return response.json();
   }).then(function (schema) {
     var wrapper = {

@@ -80,7 +80,7 @@ class FilmViewSet(viewsets.ReadOnlyModelViewSet):
 class FilmCharacterViewSet(viewsets.ReadOnlyModelViewSet):
 
     def list(self, request, film_pk=None):
-        film = Film.objects.get(pk=1)
+        film = Film.objects.get(pk=film_pk)
 
         data = []
 
