@@ -1,6 +1,6 @@
 import fetch from "isomorphic-fetch"
 
-export function fetchData(schema, ast, url, fetchFn) {
+export function fetchData(metadata, ast, url, fetchFn) {
   var query = buildQuery(ast)
   var performFetch = fetchFn || fetch
 
