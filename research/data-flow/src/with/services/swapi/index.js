@@ -7,7 +7,7 @@ var url = "http://localhost:8000/api"
 export default function swapi() {
   return monitorFetch(fetch)(`${url}/schema`).then((response) => {
     return response.json()
-  }).then((schema) => {
+  }).then((metadata) => {
     var wrapper = {
       Query: {
         "allFilms": "allFilms.results"
@@ -16,7 +16,7 @@ export default function swapi() {
 
     return {
       url,
-      schema,
+      metadata,
       adapter,
       wrapper,
       fetch: monitorFetch(fetch)
