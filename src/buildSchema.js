@@ -1,5 +1,5 @@
 import {buildClientSchema} from "graphql"
 
-export function buildSchema(schema) {
-  return buildClientSchema(schema)
+export function buildSchema(metadata) {
+  return buildClientSchema(metadata)
 }

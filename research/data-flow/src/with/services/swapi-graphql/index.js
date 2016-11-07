@@ -39,7 +39,7 @@ export default function swapiGraphQL() {
 
     return {
       url,
-      schema: response.data,
+      metadata: response.data,
       wrapper
     }
   })

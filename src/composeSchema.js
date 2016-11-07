@@ -42,29 +42,29 @@ export function composeSchema(...services) {
               }, info)
 
               var asts = serviceInfos.map((serviceInfo, index) => {
-                var {schema, adapter} = serviceInfo
+                var {metadata, adapter} = serviceInfo
                 var clientSchema = clientSchemasWrapped[index]
 
                 if (adapter) {
-                  return adapter.transformAST(schema, clientSchema, rootAST)
+                  return adapter.transformAST(metadata, clientSchema, rootAST)
                 } else {
-                  return transformAST(schema, clientSchema, rootAST)
+                  return transformAST(metadata, clientSchema, rootAST)
                 }
               })
 
               reduceASTs(rootAST, ...asts)
 
               var requests = serviceInfos.map((serviceInfo, index) => {
-                var {schema, adapter, url, wrapper, fetch} = serviceInfo
+                var {metadata, adapter, url, wrapper, fetch} = serviceInfo
                 var clientSchemaWrapped = clientSchemasWrapped[index]
                 var clientSchema = clientSchemas[index]
                 var ast = unwrapAST(asts[index], clientSchemaWrapped, wrapper)
                 var request
 
                 if (adapter) {
-                  request = adapter.fetchData(schema, ast, url, fetch)
+                  request = adapter.fetchData(metadata, ast, url, fetch)
                 } else {
-                  request = fetchData(schema, ast, url, fetch)
+                  request = fetchData(metadata, ast, url, fetch)
                 }
 
                 return request.then((data) => {

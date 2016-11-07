@@ -1,6 +1,6 @@
 import clone from 'clone'
 
-export function transformAST(schema, clientSchema, ast) {
+export function transformAST(metadata, schema, ast) {
   ast = clone(ast)
 
   var reduceAST = (type, fields) => {
@@ -16,7 +16,7 @@ export function transformAST(schema, clientSchema, ast) {
     })
   }
 
-  reduceAST(clientSchema.getQueryType(), ast.fields)
+  reduceAST(schema.getQueryType(), ast.fields)
 
   return ast
 }
