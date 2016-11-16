@@ -9,7 +9,7 @@ export function reduceASTs(rootAST, ...asts) {
     return clone(ast)
   })
 
-  asts.sort((ast) => {
+  clone(asts).sort((ast) => {
     return heuristic(rootFieldPaths, ast)
   }).reverse()
 
@@ -21,6 +21,8 @@ export function reduceASTs(rootAST, ...asts) {
       reduceAST(_ast, fieldPaths)
     })
   })
+
+  return asts
 }
 
 function deleteFieldPath(ast, fieldPath) {
