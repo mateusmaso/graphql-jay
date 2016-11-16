@@ -1,5 +1,6 @@
 import {buildSchema} from "./buildSchema"
 import {deepExtendSchema} from "./deepExtendSchema"
+import {deepExtendData} from "./deepExtendData"
 import {wrapData} from "./wrapData"
 import {wrapSchema} from "./wrapSchema"
 import {unwrapAST} from "./unwrapAST"
@@ -7,28 +8,27 @@ import {simplifyAST} from "./simplifyAST"
 import {reduceASTs} from "./reduceASTs"
 import {fetchData} from "./fetchData"
 import {transformAST} from "./transformAST"
-import deepAssign from "deep-assign"
 
 export function composeSchema(...services) {
   return Promise.all(services.map((service) => {
     return service()
-  })).then((serviceInfos) => {
-    return Promise.all(serviceInfos.map((serviceInfo) => {
-      var {schema, adapter} = serviceInfo
+  })).then((services) => {
+    return Promise.all(services.map((service) => {
+      var {schema, adapter} = service
 
       if (adapter) {
         return adapter.buildSchema(schema)
       } else {
         return buildSchema(schema)
       }
-    })).then((clientSchemas) => {
-      return Promise.all(serviceInfos.map((serviceInfo, index) => {
-        var {wrapper} = serviceInfo
-        var clientSchema = clientSchemas[index]
-        return wrapSchema(clientSchema, wrapper)
-      })).then((clientSchemasWrapped) => {
-        return deepExtendSchema(...clientSchemasWrapped).then((rootClientSchema) => {
-          var queryFields = rootClientSchema.getQueryType().getFields()
+    })).then((schemas) => {
+      return Promise.all(services.map((service, index) => {
+        var {wrapper} = service
+        var schema = schemas[index]
+        return wrapSchema(schema, wrapper)
+      })).then((wrappedSchemas) => {
+        return deepExtendSchema(...wrappedSchemas).then((rootSchema) => {
+          var queryFields = rootSchema.getQueryType().getFields()
 
           Object.keys(queryFields).forEach((queryFieldName) => {
             var queryField = queryFields[queryFieldName]
@@ -41,24 +41,24 @@ export function composeSchema(...services) {
                 }
               }, info)
 
-              var asts = serviceInfos.map((serviceInfo, index) => {
-                var {metadata, adapter} = serviceInfo
-                var clientSchema = clientSchemasWrapped[index]
+              var asts = services.map((service, index) => {
+                var {metadata, adapter} = service
+                var schema = wrappedSchemas[index]
 
                 if (adapter) {
-                  return adapter.transformAST(metadata, clientSchema, rootAST)
+                  return adapter.transformAST(metadata, schema, rootAST)
                 } else {
-                  return transformAST(metadata, clientSchema, rootAST)
+                  return transformAST(metadata, schema, rootAST)
                 }
               })
 
-              reduceASTs(rootAST, ...asts)
+              asts = reduceASTs(rootAST, ...asts)
 
-              var requests = serviceInfos.map((serviceInfo, index) => {
-                var {metadata, adapter, url, wrapper, fetch} = serviceInfo
-                var clientSchemaWrapped = clientSchemasWrapped[index]
-                var clientSchema = clientSchemas[index]
-                var ast = unwrapAST(asts[index], clientSchemaWrapped, wrapper)
+              var requests = services.map((service, index) => {
+                var {metadata, adapter, url, wrapper, fetch} = service
+                var wrappedSchema = wrappedSchemas[index]
+                var schema = schemas[index]
+                var ast = unwrapAST(asts[index], wrappedSchema, wrapper)
                 var request
 
                 if (adapter) {
@@ -68,19 +68,19 @@ export function composeSchema(...services) {
                 }
 
                 return request.then((data) => {
-                  return wrapData(data, clientSchema, wrapper)
+                  return wrapData(data, schema, wrapper)
                 })
               })
 
               return Promise.all(requests).then((responses) => {
-                return deepAssign(...responses)
+                return deepExtendData(...responses)
               }).then((response) => {
                 return response[info.fieldName]
               })
             }
           })
 
-          return rootClientSchema
+          return rootSchema
         })
       })
     })
