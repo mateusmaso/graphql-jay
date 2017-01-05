@@ -24,7 +24,7 @@ export default function graph() {
 
     return {
       url,
-      schema: response.data,
+      metadata: response.data,
       wrapper
     }
   })

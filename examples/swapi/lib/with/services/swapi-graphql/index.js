@@ -52,7 +52,7 @@ function swapiGraphQL() {
 
     return {
       url: url,
-      schema: response.data,
+      metadata: response.data,
       wrapper: wrapper
     };
   });

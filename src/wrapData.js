@@ -6,7 +6,6 @@ export function wrapData(data, schema, wrapper={}) {
       Object.keys(wrap).forEach((wrapFieldName) => {
         var wrapPath = wrap[wrapFieldName]
         var [firstFieldName, secondFieldName] = wrapPath.split(".")
-
         var fieldsList = [fields];
 
         if (Array.isArray(fields)) {
