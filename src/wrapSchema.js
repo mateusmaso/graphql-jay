@@ -7,11 +7,10 @@ export function wrapSchema(schema, wrapper={}) {
     var types = schemaData.__schema.types
 
     Object.keys(wrapper).forEach((typeName) => {
+      var wrap = wrapper[typeName]
       var type = types.find((type) => {
         return type.name == typeName
       })
-
-      var wrap = wrapper[typeName]
 
       Object.keys(wrap).forEach((wrapFieldName) => {
         var fieldName = wrap[wrapFieldName]
@@ -32,11 +31,9 @@ export function wrapSchema(schema, wrapper={}) {
 
 function fieldpath(typeName, fieldName, types) {
   var fieldNames = fieldName.split(".")
-
   var type = types.find((type) => {
     return type.name == typeName
   })
-
   var field = type.fields.find((field) => {
     return field.name == fieldNames[0]
   })

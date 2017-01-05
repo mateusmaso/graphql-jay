@@ -5,7 +5,7 @@
     "babel-preset-es2015": "^6.5.0",
     "graphql": "^0.7.2",
     "graphql-jay": "file:../..",
-    "graphql-jay-hyperschema": "file:../../../graphql-jay-hyperschema",
+    "graphql-jay-hyperschema": "^0.1.0",
     "isomorphic-fetch": "^2.2.1",
     "bluebird": "^3.4.6",
     "group-by": "^0.0.1",
@@ -14,13 +14,14 @@
   },
   "scripts": {
     "prestart": "npm run build",
-    "start": "node lib",
+    "start": "npm run swapi-graphql & npm run swapi & (sleep 6 && node lib)",
+    "poststart": "lsof -t -i tcp:8000 | xargs kill & lsof -t -i tcp:8080 | xargs kill",
     "build": "babel src --out-dir lib",
     "swapi": "cd swapi && make serve",
     "swapi-graphql": "cd swapi-graphql && npm start"
   },
   "engines": {
-    "node" : "~5.9.0"
+    "node" : "~7.3.0"
   },
   "main": "lib/index.js",
   "private": true

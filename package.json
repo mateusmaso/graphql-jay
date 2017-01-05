@@ -1,6 +1,6 @@
 {
   "name": "graphql-jay",
-  "description": "GraphQL schema generator for composing data over JSON-based services",
+  "description": "GraphQL schema generator for composing Web APIs",
   "version": "0.1.0",
   "license": "MIT",
   "keywords": [
@@ -37,13 +37,13 @@
     "url": "http://github.com/mateusmaso/graphql-jay"
   },
   "scripts": {
-    "start": "node test/server",
     "build": "babel src --out-dir lib",
     "pretest": "npm run build",
-    "test": "mocha --require babel-register"
+    "test": "node test/server & mocha --require babel-register",
+    "posttest": "lsof -t -i tcp:8080 | xargs kill"
   },
   "engines": {
-    "node" : "~5.9.0"
+    "node" : "~7.3.0"
   },
   "main": "lib/index.js"
 }
