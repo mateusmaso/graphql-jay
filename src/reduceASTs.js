@@ -1,10 +1,15 @@
+import clone from 'clone'
 import keypath from 'keypath'
 import traverse from 'traverse'
 
 export function reduceASTs(rootAST, ...asts) {
   var rootFieldPaths = fieldPathsFor(rootAST)
 
-  asts.sort((ast) => {
+  asts = asts.map((ast) => {
+    return clone(ast)
+  })
+
+  clone(asts).sort((ast) => {
     return heuristic(rootFieldPaths, ast)
   }).reverse()
 
@@ -16,6 +21,8 @@ export function reduceASTs(rootAST, ...asts) {
       reduceAST(_ast, fieldPaths)
     })
   })
+
+  return asts
 }
 
 function deleteFieldPath(ast, fieldPath) {
@@ -23,8 +30,8 @@ function deleteFieldPath(ast, fieldPath) {
   var lastKey = keys[keys.length - 1]
   keys.pop()
   var key = keys.join(".")
-  var obj = keypath(key, ast)
-  delete obj[lastKey]
+  var value = keypath(key, ast)
+  delete value[lastKey]
 }
 
 function reduceAST(ast, fieldPaths) {

@@ -18,7 +18,7 @@ export default function graph2() {
   }).then((response) => {
     return {
       url,
-      schema: response.data
+      metadata: response.data
     }
   })
 }
