@@ -26,10 +26,10 @@ $ npm start && sleep .2 && cat data.json
 
 ## Data Flow Changes
 
-- Change endpoint URI.
-- Change response structure level.
-- Add faster endpoint.
-- Remove deprecated endpoint.
+- [Change endpoint URI](https://github.com/mateusmaso/graphql-jay/tree/dfr-01).
+- [Change response structure level](https://github.com/mateusmaso/graphql-jay/tree/dfr-02).
+- [Add faster endpoint](https://github.com/mateusmaso/graphql-jay/tree/dfr-03).
+- [Remove deprecated endpoint](https://github.com/mateusmaso/graphql-jay/tree/dfr-04).
 
 ## Variables
 
