@@ -70,7 +70,7 @@ export default function service() {
 
     return {
       url,
-      schema: response.data,
+      metadata: response.data,
       wrapper
     }
   })

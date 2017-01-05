@@ -15,10 +15,10 @@ export default function graph3() {
     method: 'POST'
   }).then((response) => {
     return response.json()
-  }).then((response) => {    
+  }).then((response) => {
     return {
       url,
-      schema: response.data
+      metadata: response.data
     }
   })
 }

@@ -14,12 +14,12 @@ export function composeSchema(...services) {
     return service()
   })).then((services) => {
     return Promise.all(services.map((service) => {
-      var {schema, adapter} = service
+      var {metadata, adapter} = service
 
       if (adapter) {
-        return adapter.buildSchema(schema)
+        return adapter.buildSchema(metadata)
       } else {
-        return buildSchema(schema)
+        return buildSchema(metadata)
       }
     })).then((schemas) => {
       return Promise.all(services.map((service, index) => {

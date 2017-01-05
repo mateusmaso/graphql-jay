@@ -14,13 +14,14 @@
   },
   "scripts": {
     "prestart": "npm run build",
-    "start": "node lib",
+    "start": "npm run swapi-graphql & npm run swapi & (sleep 6 && node lib)",
+    "poststart": "lsof -t -i tcp:8000 | xargs kill & lsof -t -i tcp:8080 | xargs kill",
     "build": "babel src --out-dir lib",
     "swapi": "cd swapi && make serve",
     "swapi-graphql": "cd swapi-graphql && npm start"
   },
   "engines": {
-    "node" : "~5.9.0"
+    "node" : "~7.3.0"
   },
   "main": "lib/index.js",
   "private": true

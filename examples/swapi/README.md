@@ -2,6 +2,18 @@
 
 Comparative research on GraphQL Jay's usage as a decoupling tool for client-server communication.
 
+## Install
+
+```
+$ npm install && cd swapi-graphql && npm install && cd ..
+```
+
+## Run
+
+```
+$ npm start && sleep .2 && cat data.json
+```
+
 ## Entities
 
 - Film, People, Species, Planet, Starship, Vehicle

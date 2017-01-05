@@ -20,7 +20,7 @@ var url = "http://localhost:8000/api";
 function swapi() {
   return (0, _perf.monitorFetch)(_isomorphicFetch2.default)(url + "/schema").then(function (response) {
     return response.json();
-  }).then(function (schema) {
+  }).then(function (metadata) {
     var wrapper = {
       Query: {
         "allFilms": "allFilms.results"
@@ -29,7 +29,7 @@ function swapi() {
 
     return {
       url: url,
-      schema: schema,
+      metadata: metadata,
       adapter: _graphqlJayHyperschema.adapter,
       wrapper: wrapper,
       fetch: (0, _perf.monitorFetch)(_isomorphicFetch2.default)
