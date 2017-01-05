@@ -86,7 +86,7 @@ export default function service() {
 
 ## Examples
 
-#### [SWAPI](https://www.github.com/mateusmaso/graphql-jay/tree/master/research/todomvc)
+#### [SWAPI](https://www.github.com/mateusmaso/graphql-jay/tree/master/examples/swapi)
 
 ## License
 
