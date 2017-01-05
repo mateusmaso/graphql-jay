@@ -2,6 +2,7 @@
   "name": "graphql-jay",
   "description": "GraphQL schema generator for composing Web APIs",
   "version": "0.1.0",
+  "author": "mateusmaso",
   "license": "MIT",
   "keywords": [
     "graphql",
