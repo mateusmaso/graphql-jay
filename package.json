@@ -37,10 +37,10 @@
     "url": "http://github.com/mateusmaso/graphql-jay"
   },
   "scripts": {
-    "start": "node test/server",
     "build": "babel src --out-dir lib",
     "pretest": "npm run build",
-    "test": "mocha --require babel-register"
+    "test": "node test/server & mocha --require babel-register",
+    "posttest": "lsof -t -i tcp:8080 | xargs kill"
   },
   "engines": {
     "node" : "~5.9.0"
